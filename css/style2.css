@@ -1,0 +1,413 @@
+/*CSS*/
+
+#headerdiv{
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background-color: #4682B4;
+    position: fixed;
+    display: inline-block;
+    margin-top: -100px;
+    /*vertical-align: middle;*/
+    z-index: 999;
+}
+
+#imglogo{
+    height:80px;
+    margin-top: 10px;
+    margin-left: 10px;
+    float: left;
+    border-radius: 20px;
+}
+
+#menu{
+    display: inline;
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+#btnOk{
+    float: right;
+    margin-top: 50px;
+    margin-right: 15px;
+}
+
+.camposlogin{
+    float: right;
+    color: aliceblue;
+    margin-right: 15px;
+}
+
+#camposlider{
+    width: 1300px;
+    height: 500px;
+    background-color: chocolate;
+    margin-top: 100px;
+}
+
+#headerdentro{
+    width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#menulateral{
+    background-color: #227FCC;
+    height: 990px;
+    margin-right: 5px;
+    width: 239px;
+    float: left;
+    border: solid white;
+    font-size: 20px;
+    color: white;
+    border-radius: 10px;
+}
+
+#menulateral p{
+    border-bottom: solid white;
+    margin: 0;
+}
+
+#redesocial{
+    height: 450px;
+    width: 150px;
+    position: fixed;
+    margin-top: 150px;
+    margin-left: 1350px;
+    z-index: 999;
+}
+
+#rs1{
+    height: 150px;
+    width: 150px;
+    opacity: 100;
+}
+
+#rs2{
+    height: 150px;
+    width: 150px;
+    margin-top: 5px;
+}
+
+#rs3{
+    height: 150px;
+    width: 150px;
+    margin-top: 5px;
+}
+
+#content{
+    width: 1300px;
+    height: 1000px;
+    margin-top: 5px;
+}
+
+#abaixodoheader{
+    width: 1300px;
+    height: 1500px;
+    opacity: 100;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#caixaprodutos{
+    background-color:#4169E1;
+    height: 990px;
+    margin-left: 250px;
+    width: 1050px;
+    font-family: sans-serif;
+    border-radius: 10px;
+}
+
+.produto{
+    border: solid 5px white;
+    height: 270px;
+    width: 220px;
+    padding: 10px;
+    float: left;
+    margin: 4px;
+    background-color: #008B8B;
+    border-radius: 5px;
+    color: white;
+    overflow: hidden;
+}
+
+.produto p{
+    margin: 10px;
+}
+
+.produto a{
+    float: right;
+    text-decoration:none;
+    color: #ffffff;
+}
+
+.imgproduto{
+    height: 160px;
+    width: 160px;
+    margin-left: 35px;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url("../imagens/centroestetico/fundo10.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/*menu*/
+
+#menu{
+	width:600px;
+	height:35px;
+	border:solid 2px #ffffff;
+	background-color:#000000;
+	padding-left:30px;
+	padding-top:10px;
+    z-index: 999;
+}
+
+#menu li{
+	font-family:verdana;
+	font-size:15px;
+	color:#ffffff;
+	border:solid 1px #ffffff;
+	margin-right:10px;
+	width:120px;
+	min-height: 20px;
+	text-align:center;
+	list-style:none;
+	position:relative;
+	float:left;
+	/*Coloca a lista no fomato horizontal*/
+	display:inline;
+	padding-top:2px;
+}
+
+#menu li a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#menu li:hover{
+	background-color:#6600cc;
+	transition:1s;
+	
+	/*permite trocar o cursor do mouse
+		opções (wait, pointer, move, crosshair, url, etc...)
+	*/
+	cursor:pointer;
+}
+
+#menu li:hover>.submenu{
+	display:block;
+}
+
+.submenu{
+	width:165px;
+	height: 170px;
+	background-color:#5d7399;
+	margin-top:4px;
+	display:none;
+    border:solid 1px #ffffff;
+    
+}
+
+.submenu li{
+	margin-top:10px;
+	position:relative;
+}
+
+/* Segunda página */
+
+#contentbarbearia{
+    width: 1300px;
+    height: 1000px;
+    margin-top: -15px;
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 10px;
+}
+
+#contentbarbearia h1{
+    color: white;
+    text-align: center;
+}
+
+#contentbarbearia p{
+    /*font-size: 70px;*/
+}
+
+.produto2{
+    border: solid 5px white;
+    height: 270px;
+    width: 220px;
+    padding: 10px;
+    float: left;
+    margin: 5px;
+    background-color: #008B8B;
+    border-radius: 5px;
+    color: white;
+}
+
+.produto2 p{
+    margin: 10px;
+}
+
+.produto2 a{
+    float: right;
+}
+
+/* Terceira Página */
+
+.produto3{
+    border: solid 5px white;
+    height: 290px;
+    width: 220px;
+    padding: 10px;
+    float: left;
+    margin: 5px;
+    background-color: #008B8B;
+    border-radius: 5px;
+    color: white;
+}
+
+.produto3 p{
+    margin: 10px;
+}
+
+.produto3 a{
+    float: right;
+}
+
+/* Fale conosco */
+#contentfaleconosco{
+    width: 1300px;
+    height: 1000px;
+    margin-top: -15px;
+    background-color: #1E90FF;
+    /*text-align: center;*/
+    color: white;
+}
+
+#contentfaleconosco h1{
+    text-align: center;
+}
+
+#formulario{
+    font-size: 20px;
+}
+
+#formulario tr{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+#divform{
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+#divform p{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+/*Sobre*/
+
+#contentsobre{
+    width: 1290px;
+    height: 990px;
+    margin-top: 10px;
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#contentsobre h1{
+    color: white;
+    text-align: center;
+}
+
+#contentsobre p{
+    font-size: 24px;
+}
+
+
+/*PRODUTOS DO MÊS*/
+
+.produtodomes{
+    border: solid 5px white;
+    height: 550px;
+    width: 400px;
+    padding: 10px;
+    float: left;
+    margin: 6px;
+    background-color: #008B8B;
+    border-radius: 5px;
+    color: white;
+}
+
+.produtodomes p{
+    margin: 10px;
+    font-size: 35px;
+}
+
+.produtodomes a{
+    float: right;
+}
+
+#imgprodutodomes{
+    height: 160px;
+    width: 160px;
+    margin-left: ;
+}
+
+.imgprodutodomes{
+    width: 320px;
+    height: 320px;
+    margin-left: 40px;
+}
+
+#contentproduto_mes{
+    width: 1300px;
+    height: 1000px;
+    margin-top: -15px;
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 10px;
+}
+
+#contentproduto_mes h1{
+    text-align: center;
+}
+
+#produtosdomes{
+    width: 884px;
+    height: 588px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#botaodesign{
+    position: fixed;
+    z-index: 996;
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
+    margin-left: -200px;
+    margin-top: 650px;
+    cursor: pointer;
+    /*background-color: #000000;*/
+    border: 0;
+    text-align: center;
+}
+
+#botaodesign img{
+    width: 130px;
+    height: 130px;
+}
