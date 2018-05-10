@@ -87,15 +87,19 @@ if(isset($_POST['btnSalvar'])){
             include('menu.php');
             ?>
             <div id="content">
+                <form name="frmfoto" method="post" action="upload.php" enctype="multipart/form-data">
+                    <input type="file" name="flefoto" id="fotos">
+                </form>
+                
                 <form name="novo_nivel" method="post" action="cadastro_sobre.php" enctype="multipart/form-data">
                     <select name="slcEstabelecimento">
                         <option value="1">Barbearia</option>
                         <option value="2">Centro Estético</option>
                     </select><br>
-                    Titulo: <input type="text" name="txtTitulo"><br>
-                    <input type="file" name="flefoto" ><br>
+                    Titulo: <input type="text" name="txtTitulo"><br><br>
                     Sobre: <textarea rows="10" cols="50" style="resize: none" name="txtSobre"></textarea><br>
-                    Visibilidade: <label class="switch">
+                    Visibilidade: 
+                    <label class="switch">
                         <input type="checkbox" name="ativo">
                         <span class="slider round"></span>
                     </label><br>
