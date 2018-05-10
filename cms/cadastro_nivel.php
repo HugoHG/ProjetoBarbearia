@@ -3,33 +3,18 @@ $conexao = @mysql_connect('localhost', 'root', 'bcd127');
 
 mysql_select_db('db_centroestetico');
 
-$sql = "select * from tbl_nivel";
-
-$resultadoSelect = mysql_query($sql);
-
-/*while($valor = mysql_fetch_array($resultadoSelect)){
-    echo($valor['nomeNivel']);
-}*/
-
-if(isset($_GET['modo'])){
-    $modo = $_GET['modo'];
-    $id = $_GET['id'];
+if(isset($_POST['btnSalvar'])){
     
-    if($modo == 'excluir'){
-        $sql = 'delete from tbl_nivel where idNivel = '.$id.';';
-        
-        echo($sql);
-        
-        mysql_query($sql);
-        
-        header('location:cms.php');
-    }
+    $nome_nivel = $_POST['nome_nivel'];
+
+    $sql = 'insert into tbl_nivel(nomeNivel) values ("'.$nome_nivel.'");';
     
-    if($modo == 'editar'){
-        header('location:editar_nivel.php?id='.$id);
-    }
+    echo($sql);
+
+    mysql_query($sql);
+    
+    header('location:cms.php');
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +33,10 @@ if(isset($_GET['modo'])){
                 include('menu.php');
             ?>
             <div id="content">
-                
+                <form name="novo_nivel" method="post" action="cadastro_nivel.php">
+                    <input type="text" name="nome_nivel" placeholder="Insira o nome do novo nivel" maxlength="20">
+                    <input type="submit" name="btnSalvar" value="Salvar">
+                </form>
             </div>
         </div>
     </body>
