@@ -1,42 +1,45 @@
 <?php
-$conexao = @mysql_connect('localhost', 'root', 'bcd127');
+//Abrindo conexão com o banco
+session_start();
+$conexao = @mysqli_connect('192.168.0.2', 'pc320181', 'senai127', 'dbpc320181');
 
-mysql_select_db('db_centroestetico');
+//Fazendo o select
+$sql = "select * from view_promocoes";
 
-$sql = "select tbl_produto.idProduto, descProduto, foto, valor, idEstabelecimento, tbl_promocao.desconto, tbl_promocao.idPromocao, tbl_produto.nomeProduto, tbl_promocao.visibilidade
-from tbl_produto 
-inner join tbl_promocao on tbl_promocao.idProduto = tbl_produto.idProduto;";
+$resultadoSelect = mysqli_query($conexao, $sql);
 
-$resultadoSelect = mysql_query($sql);
-
-/*while($valor = mysql_fetch_array($resultadoSelect)){
+/*while($valor = mysqli_fetch_array($resultadoSelect)){
     echo($valor['nomeNivel']);
 }*/
 
+//Verificando o modo
 if(isset($_GET['modo'])){
     $modo = $_GET['modo'];
     $id = $_GET['id'];
     
+    //Modo excluir
     if($modo == 'excluir'){
         $sql = 'delete from tbl_promocao where idPromocao = '.$id.';';
         
         echo($sql);
         
-        mysql_query($sql);
+        mysqli_query($conexao, $sql);
         
         header('location:adm_promocoes.php');
     }
     
+    //Modo editar
     if($modo == 'editar'){
         header('location:editar_promocao.php?id='.$id);
     }
 }
+if(@$_SESSION['logado'] == 1){
+    ?>
 
-?>
-
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
     <head>
+        <meta charset="utf-8">
         <title>CMS</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
@@ -45,9 +48,11 @@ if(isset($_GET['modo'])){
             <div id="header">
                 <h1 id="tituloCMS">CMS - Sistema de Gerenciamento do Site</h1>
                 <div id="div_img_banner"><img src="../imagens/logobarbearia.jpg" id="img_banner"></div>
+                <p id="nomeUsuario">Bem-vindo, <?php echo($_SESSION["nomeUsuario"]) ?></p>
+                <a href="logout.php">LOGOUT</a>
             </div>
             <?php
-                include('menu.php');
+            include('menu.php');
             ?>
             <div id="content">
                 <table id="tabela_nivel">
@@ -91,7 +96,7 @@ if(isset($_GET['modo'])){
                     </tr>
                     <tr>
                         <?php
-                        while($promocao = mysql_fetch_array($resultadoSelect)){
+                        while($promocao = mysqli_fetch_array($resultadoSelect)){
                             $preco_real = $promocao['valor'] - ($promocao['desconto'] * $promocao['valor']/100);
                             
                             echo('<tr>');
@@ -116,4 +121,9 @@ if(isset($_GET['modo'])){
             </div>
         </div>
     </body>
-</html>
+    </html>
+    <?php   
+} else {
+    echo("Login não realizado");
+}
+?>

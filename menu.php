@@ -1,7 +1,8 @@
 <?php
-if($design == "CSS/style.css"){
+//pega o design
+if($design == "css/style.css"){
     echo('<img src="imagens/logobarbearia.jpg" id="imglogo" alt="Logo do site">');
-} elseif($design == "CSS/style2.css"){
+} elseif($design == "css/style2.css"){
     echo('<img src="imagens/penelope.png" id="imglogo" alt="Logo do site">');
 }
 ?>
@@ -13,7 +14,7 @@ if($design == "CSS/style.css"){
             <ul class="submenu">
                 <li><a href="produtos_servicos.php?design=<?php echo($design); ?>">Produtos e serviços em destaque</a></li>
                 <li><a href="promocoes.php?design=<?php echo($design); ?>">Promoções</a></li>
-                <li><a href="produtos_do_mes.php?design=<?php echo($design); ?>">Produtos do mês</a></li>
+                <li><a href="produtos_do_mes.php?design=<?php echo($design); ?>">Produto do mês</a></li>
             </ul>
         </li>
         <li>Sobre
@@ -25,12 +26,14 @@ if($design == "CSS/style.css"){
         <li><a href="faleconosco.php?design=<?php echo($design); ?>">Fale Conosco</a></li>
     </ul>
 </nav>
-<input type="button" value="Ok" id="btnOk">
-<div class="camposlogin">
-    <p>Senha</p>
-    <input type="text">
-</div>
-<div class="camposlogin">
-    <p>Usuario</p>
-    <input type="text">
-</div>
+<form name="frmLogin" method="post" action="login.php">
+    <input type="submit" value="Ok" id="btnOk">
+    <div class="camposlogin">
+        <p>Senha</p>
+        <input type="text" name="txtSenha">
+    </div>
+    <div class="camposlogin">
+        <p>Usuario</p>
+        <input type="txtUsuario" name="txtUsuario">
+    </div>
+</form>

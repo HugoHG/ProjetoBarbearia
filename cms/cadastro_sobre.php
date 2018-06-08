@@ -1,111 +1,104 @@
 <?php
-$conexao = @mysql_connect('localhost', 'root', 'bcd127');
+//Abrindo conexão com o banco
+session_start();
 
-mysql_select_db('db_centroestetico');    
+$conexao = @mysqli_connect('192.168.0.2', 'pc320181', 'senai127', 'dbpc320181');
 
-if(isset($_GET['id'])){
-
-    $sql = "select * from tbl_sobre where idSobre = ".$id.';';
-
-    $resultadoSelect = mysql_query($sql);
-
-    $sqlEstabelecimento = "select idEstabelecimento from tbl_sobre where idSobre = ".$id.';';
-
-    $resultEstabelecimento = mysql_query($sql);
-
-    while ($item = mysql_fetch_array($resultEstabelecimento)){
-        $estabelecimento = $item['idEstabelecimento'];
-        $visibilidade = $item['visibilidade'];
-        $imagem = $item['imgSobre'];
-        $sobre = $item['txtSobre'];
-        $titulo = $item['titulo'];
-    }
-}
-
-if(isset($_POST['btnSalvar'])){
+if(isset($_POST['txtTitulo'])){
     if(isset($_POST['ativo'])){
         $visibilidade = 1;
+        $sql = "update tbl_sobre set visibilidade = 0 where idEstabelecimento = ".$_POST['slcEstabelecimento'].";";
+        mysqli_query($conexao, $sql);
+        //echo($sql);
     } else{
         $visibilidade = 0;
     }
 
-    $nome_arquivo = basename($_FILES['flefoto']['name']);
+    //definindo caminho da foto
+    $nome_foto = $_POST['txtfoto'];
 
-    $ext = strchr($nome_arquivo, ".");
+    //salvando no banco
+    $sql = "insert into tbl_sobre set idEstabelecimento=".$_POST['slcEstabelecimento'].", titulo = '".$_POST['txtTitulo']."', imgSobre = '".$nome_foto."', txtSobre = '".$_POST['txtSobre']."', visibilidade = ".$visibilidade.";";
 
-    $nome_foto = pathinfo($nome_arquivo, PATHINFO_FILENAME);
-
-    $nome_arquivo = md5(uniqid(time()).$nome_foto).$ext;
-
-    $tamanho_arquivo = round(($_FILES['flefoto']['size'])/1024);
-
-    $upload_dir = "../imagens/sobre/";
-
-    $arquivos_permitidos = array(".jpg", ".png", ".gif", ".svg",".jpeg");
-
-    $caminho_imagem = $upload_dir.$nome_arquivo;
+    mysqli_query($conexao, $sql);
     
-    echo($caminho_imagem);
+    //echo($sql);
 
-    if(in_array($ext, $arquivos_permitidos))
-    {
-        /*if($tamanho_arquivo<=5120){*/
-        $arquivo_tmp = $_FILES['flefoto']['tmp_name'];
-        if(move_uploaded_file($arquivo_tmp, $caminho_imagem)){
-            $sql = "insert into tbl_sobre set idEstabelecimento=".$_POST['slcEstabelecimento'].", titulo = '".$_POST['txtTitulo']."', imgSobre = '".$caminho_imagem."', txtSobre = '".$_POST['txtSobre']."', visibilidade = ".$visibilidade.";";
-
-            mysql_query($sql);
-        } else{
-            echo("Erro ao enviar o arquivo para o servidor");
-        }
-        /*} else{
-            echo("Tamanho de arquivo inválido");
-        }*/
-    } else
-    {
-        echo("Arquivo não permitido");
-    }
-    
     header('location:adm_sobre.php');
 }
-?>
+if(@$_SESSION['logado'] == 1){
+    ?>
 
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
     <head>
+        <meta charset="utf-8">
         <title>CMS</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/toggle.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.form.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#fotos').live('change', function(){
+                    //Criando uma imagem em .gif para colocar o gif animado
+                    $('#visualizar').html('<img src="gifs/barbershop.gif">');
+                    //Temporizador de 2 segundos para executar o gif animado e depois fazer o ajaxForm
+
+                    setTimeout(function(){
+                        //forçando via ajax um submit do form da foto, já que não temos um botão
+                        $('#frmfoto').ajaxForm({
+                            target:'#visualizar'
+                            //target:'#visualizar' - retorna a imagem na div visualizar ('callback do formulário'). É um parâmetro da função.
+                        }).submit();
+                    },1000);
+
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="main">
             <div id="header">
                 <h1 id="tituloCMS">CMS - Sistema de Gerenciamento do Site</h1>
                 <div id="div_img_banner"><img src="../imagens/logobarbearia.jpg" id="img_banner"></div>
+                <p id="nomeUsuario">Bem-vindo, <?php echo($_SESSION["nomeUsuario"]) ?></p>
+                <a href="logout.php">LOGOUT</a>
             </div>
             <?php
             include('menu.php');
             ?>
             <div id="content">
-                <form name="frmfoto" method="post" action="upload.php" enctype="multipart/form-data">
+                <div id="visualizar">
+
+                </div>
+
+                <form name="frmfoto" method="post" action="uploadfoto.php" enctype="multipart/form-data" id="frmfoto">
                     <input type="file" name="flefoto" id="fotos">
                 </form>
-                
-                <form name="novo_nivel" method="post" action="cadastro_sobre.php" enctype="multipart/form-data">
+
+                <form name="novo_sobre" method="post" action="cadastro_sobre.php" enctype="multipart/form-data">
                     <select name="slcEstabelecimento">
                         <option value="1">Barbearia</option>
                         <option value="2">Centro Estético</option>
                     </select><br>
-                    Titulo: <input type="text" name="txtTitulo"><br><br>
+                    Titulo: <input type="text" name="txtTitulo" maxlength="50" required><br><br>
                     Sobre: <textarea rows="10" cols="50" style="resize: none" name="txtSobre"></textarea><br>
                     Visibilidade: 
                     <label class="switch">
                         <input type="checkbox" name="ativo">
                         <span class="slider round"></span>
                     </label><br>
-                    <input type="submit" name="btnSalvar" value="Salvar">
+                    <input type="hidden" name="txtfoto">
+                    <input type="submit" name="btnSalvar" value="Salvar" class="btnNovo">
                 </form>
             </div>
         </div>
     </body>
-</html>
+    </html>
+    <?php   
+} else {
+    echo("Login não realizado");
+}
+?>

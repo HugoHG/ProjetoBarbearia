@@ -1,41 +1,45 @@
 <?php
-$conexao = @mysql_connect('localhost', 'root', 'bcd127');
+//Abrindo conexão com o banco
+session_start();
 
-mysql_select_db('db_centroestetico');
+$conexao = @mysqli_connect('192.168.0.2', 'pc320181', 'senai127', 'dbpc320181');
 
+//Fazendo o select
 $sql = "select * from tbl_faleconosco";
 
-$resultadoSelect = mysql_query($sql);
+$resultadoSelect = mysqli_query($conexao, $sql);
 
 /*while($valor = mysql_fetch_array($resultadoSelect)){
     echo($valor['nomeNivel']);
 }*/
 
+//Verificando o modo
 if(isset($_GET['modo'])){
     $modo = $_GET['modo'];
     $id = $_GET['id'];
     
+    //Modo excluir
     if($modo == 'excluir'){
         $sql = 'delete from tbl_faleconosco where idFaleConosco = '.$id.';';
         
-        echo($sql);
-        
-        mysql_query($sql);
+        mysqli_query($conexao, $sql);
         
         header('location:adm_faleconosco.php');
         
     }
     
+    //Modo editar
     if($modo == 'editar'){
         header('location:editar_faleconosco.php?id='.$id);
     }
 }
-
+if(@$_SESSION['logado'] == 1){
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>CMS</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="js/jquery.js"></script>
@@ -67,6 +71,8 @@ if(isset($_GET['modo'])){
             <div id="header">
                 <h1 id="tituloCMS">CMS - Sistema de Gerenciamento do Site</h1>
                 <div id="div_img_banner"><img src="../imagens/logobarbearia.jpg" id="img_banner"></div>
+                <p id="nomeUsuario">Bem-vindo, <?php echo($_SESSION["nomeUsuario"]) ?></p>
+                <a href="logout.php">LOGOUT</a>
             </div>
             <?php
                 include('menu.php');
@@ -122,7 +128,7 @@ if(isset($_GET['modo'])){
                     </tr>
                     <tr>
                         <?php
-                        while($mensagem = mysql_fetch_array($resultadoSelect)){
+                        while($mensagem = mysqli_fetch_array($resultadoSelect)){
                             echo('<tr>');
                             echo('<td>'.$mensagem['idFaleConosco'].'</td>');
                             echo('<td>'.$mensagem['nome'].'</td>');
@@ -148,3 +154,8 @@ if(isset($_GET['modo'])){
         </div>
     </body>
 </html>
+<?php   
+} else {
+    echo("Login não realizado");
+}
+?>

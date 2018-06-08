@@ -1,23 +1,27 @@
 <?php
-$conexao = @mysql_connect('localhost', 'root', 'bcd127');
+//Abre a sessão
+session_start();
 
-mysql_select_db('db_centroestetico');    
+//abre a conexão
+$conexao = @mysqli_connect('192.168.0.2', 'pc320181', 'senai127', 'dbpc320181');
 
 $id = $_GET['id'];
 
+//pega os dados antigos
 if(isset($_GET['id'])){
 
     $sql = "select * from tbl_promocao where idPromocao = ".$id.';';
 
-    $resultadoSelect = mysql_query($sql);
+    $resultadoSelect = mysqli_query($conexao, $sql);
 
-    while($promocao = mysql_fetch_array($resultadoSelect)){
+    while($promocao = mysqli_fetch_array($resultadoSelect)){
         $idProduto = $promocao['idProduto'];
         $desconto = $promocao['desconto'];
         $visibilidade = $promocao['visibilidade'];
     }
 }
 
+//salva os dados novos
 if(isset($_POST['btnSalvar'])){
 
     if(isset($_POST['ativo'])){
@@ -28,15 +32,17 @@ if(isset($_POST['btnSalvar'])){
 
     $sql = "update tbl_promocao set idProduto=".$_POST['idProduto'].", desconto=".$_POST['txtdesconto'].", visibilidade=".$visibilidade." where idPromocao=".$id;
 
-    mysql_query($sql);
+    mysqli_query($conexao, $sql);
 
     header('location:adm_promocoes.php');
 }
-?>
+if(@$_SESSION['logado'] == 1){
+    ?>
 
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
     <head>
+        <meta charset="utf-8">
         <title>CMS</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/toggle.css">
@@ -46,6 +52,8 @@ if(isset($_POST['btnSalvar'])){
             <div id="header">
                 <h1 id="tituloCMS">CMS - Sistema de Gerenciamento do Site</h1>
                 <div id="div_img_banner"><img src="../imagens/logobarbearia.jpg" id="img_banner"></div>
+                <p id="nomeUsuario">Bem-vindo, <?php echo($_SESSION["nomeUsuario"]) ?></p>
+                <a href="logout.php">LOGOUT</a>
             </div>
             <?php
             include('menu.php');
@@ -54,34 +62,34 @@ if(isset($_POST['btnSalvar'])){
                 <form name="novo_nivel" method="post" action="editar_promocao.php?id=<?php echo($id) ?>">
                     <table id="tabela_nivel">
                         <?php
-                          $sql = "select * from tbl_produto";
-                          $resultado = mysql_query($sql);
-                          while ($produto = mysql_fetch_array($resultado)){
-                        ?>
-                        <tr>
-                            <td>id: <?php echo($produto['idProduto'])?></td>
-                            <td>Nome: <?php echo($produto['nomeProduto'])?></td>
-                            <td>Descrição: <?php echo($produto['descProduto'])?></td>
-                            <td>Foto: <?php echo($produto['foto'])?></td>
-                            <td>Valor: <?php echo($produto['valor'])?></td>
-                            <td>idEstabelecimento: <?php echo($produto['idEstabelecimento'])?></td>
-                            <td><input type="radio" name="idProduto" value="<?php echo($produto['idProduto'])?>"
-                                       <?php if($produto['idProduto'] == $idProduto){echo("checked");}?>></td>
-                        </tr>
-                        <?php    
-                      }
-                        ?>
-                    </table>
-                    Desconto: <input type="text" name="txtdesconto" value="<?php echo($desconto) ?>">
-                    <br>
-                    Visibilidade: 
-                    <label class="switch">
+                        $sql = "select * from tbl_produto";
+                        $resultado = mysqli_query($conexao, $sql);
+                        while ($produto = mysqli_fetch_array($resultado)){
+                            ?>
+                            <tr>
+                                <td>id: <?php echo($produto['idProduto'])?></td>
+                                <td>Nome: <?php echo($produto['nomeProduto'])?></td>
+                                <td>Descrição: <?php echo($produto['descProduto'])?></td>
+                                <td>Foto: <?php echo($produto['foto'])?></td>
+                                <td>Valor: <?php echo($produto['valor'])?></td>
+                                <td>idEstabelecimento: <?php echo($produto['idEstabelecimento'])?></td>
+                                <td><input type="radio" name="idProduto" value="<?php echo($produto['idProduto'])?>"
+                                   <?php if($produto['idProduto'] == $idProduto){echo("checked");}?>></td>
+                               </tr>
+                               <?php    
+                           }
+                           ?>
+                       </table>
+                       Desconto: <input type="text" name="txtdesconto" value="<?php echo($desconto) ?>">
+                       <br>
+                       Visibilidade: 
+                       <label class="switch">
                         <input type="checkbox" name="ativo" 
-                               <?php
-                                if($visibilidade == 1){
-                                    echo("checked");
-                                };
-                               ?>>
+                        <?php
+                        if($visibilidade == 1){
+                            echo("checked");
+                        };
+                        ?>>
                         <span class="slider round"></span>
                     </label>
                     <br>
@@ -90,4 +98,9 @@ if(isset($_POST['btnSalvar'])){
             </div>
         </div>
     </body>
-</html>
+    </html>
+    <?php   
+} else {
+    echo("Login não realizado");
+}
+?>

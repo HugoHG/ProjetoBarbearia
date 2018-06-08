@@ -260,6 +260,77 @@ body{
     float: right;
 }
 
+.prod_destaque img{
+    width: 800px;
+    height: 500px;
+}
+
+.prod_destaque{
+    text-align: center;
+}
+
+.botaopassardireita{
+border:none;
+display:inline-block;
+vertical-align:middle;
+overflow:hidden;
+text-decoration:none;
+color:inherit;
+background-color:inherit;
+text-align:center;
+cursor:pointer;
+white-space:nowrap;
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+padding:8px 16px;
+
+color:#fff!important;
+background-color:#000!important;
+
+position:absolute;
+top:50%;
+right:0;
+transform:translate(0%,-50%);
+-ms-transform:translate(0%,-50%);
+
+position: fixed;
+}
+
+.botaopassaresquerda{
+border:none;
+display:inline-block;
+vertical-align:middle;
+overflow:hidden;
+text-decoration:none;
+color:inherit;
+background-color:inherit;
+text-align:center;
+cursor:pointer;
+white-space:nowrap;
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+padding:8px 16px;
+
+color:#fff!important;
+background-color:#000!important;
+
+position:absolute;
+top:50%;
+left:0;
+transform:translate(0%,-50%);
+-ms-transform:translate(-0%,-50%);
+
+position: fixed;
+}
+
 /* Terceira Página */
 
 .produto3{

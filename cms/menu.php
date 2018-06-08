@@ -8,7 +8,7 @@
             <ul id="lista_submenu">
                 <a href="adm_sobre.php"><li>Sobre a barbearia e o centro estético</li></a>
                 <a href="adm_produtos.php"><li>Produtos</li></a>
-                <a href="adm_produtos.php"><li>Nossas lojas</li></a>
+                <a href="adm_lojas.php"><li>Nossas lojas</li></a>
             </ul>
         </li>
         <li>
@@ -25,9 +25,9 @@
                 <p>Adm. Produtos</p>
             </div>
             <ul id="lista_submenu">
-                <li>Produtos e Serviços em Destaque</li>
+                <a href="adm_destaque.php"><li>Produtos e Serviços em Destaque</li></a>
                 <a href="adm_promocoes.php"><li>Promoções</li></a>
-                <li>Produto do mês</li>
+                <a href="adm_produtos_mes.php"><li>Produto do mês</li>
             </ul>
         </li>
         <li>

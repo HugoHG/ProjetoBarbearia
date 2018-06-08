@@ -1,5 +1,5 @@
 <?php
-$conexao = mysqli_connect('localhost', 'root', 'bcd127', 'db_centroestetico');
+$conexao = @mysqli_connect('192.168.0.2', 'pc320181', 'senai127', 'dbpc320181');
 
 session_start();
 
@@ -8,15 +8,15 @@ $design = @$_GET['design'];
 
 
 if(empty($design)){
-    $design = 'CSS/style.css';
+    $design = 'css/style.css';
 }
 
-if ($design == 'CSS/style.css'){
+if ($design == 'css/style.css'){
     $imagem = 'imagens/cortes/gallery_01.jpg';
     $slider1 = "imagens/barbearia/img1.jpg";
     $slider2 = "imagens/barbearia/img2.jpg";
     $slider3 = "imagens/barbearia/img3.jpg";
-} else if ($design == 'CSS/style2.css'){
+} else if ($design == 'css/style2.css'){
     $imagem = 'imagens/centroestetico/spa-12.jpg';
     $slider1 = "imagens/centroestetico/img1.jpg";
     $slider2 = "imagens/centroestetico/img2.jpg";
@@ -52,9 +52,9 @@ if(isset($_POST['btnSalvar'])){
 
     mysqli_query($conexao, $sql);
 
-    header('location:index.php');
+    header('location:faleconosco.php');
 
-    /*echo($sql);*/
+    echo($sql);
 }
 ?>
 
@@ -62,11 +62,10 @@ if(isset($_POST['btnSalvar'])){
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="<?php echo($design) ?>" id="design">
-        <link rel="stylesheet" type="text/css" href="CSS/styleslider.css">
+        <link rel="stylesheet" type="text/css" href="css/styleslider.css">
+        <meta charset="utf-8">
         <title>Centro Estético</title>
         <script>
-
-
             var slideIndex = 1;
             showSlides(slideIndex);
 
@@ -98,9 +97,9 @@ if(isset($_POST['btnSalvar'])){
 
             function mudarDesign(d){
                 if(d == 2){
-                    window.location.replace("faleconosco.php?design=CSS/style2.css");
+                    window.location.replace("faleconosco.php?design=css/style2.css");
                 } else if(d == 1){
-                    window.location.replace("faleconosco.php?design=CSS/style.css");
+                    window.location.replace("faleconosco.php?design=css/style.css");
                 }
 
             }
@@ -157,13 +156,12 @@ if(isset($_POST['btnSalvar'])){
                 </div>
             </div>
             <div id="abaixodoheader">
-
                 <?php
 
-                if($design == 'CSS/style.css'){
-                    echo('<button id="botaodesign" onclick="mudarDesign(2);">Mudar design</button>');
+                if($design == 'css/style.css'){
+                    echo('<button id="botaodesign" onclick="mudarDesign(2);"><img src="imagens/penelopeb.png"></button>');
                 } else{
-                    echo('<button id="botaodesign" onclick="mudarDesign(1);">Mudar design</button>');
+                    echo('<button id="botaodesign" onclick="mudarDesign(1);"><img src="imagens/logobarb.png"></button>');
                 }
 
                 ?>
@@ -176,26 +174,26 @@ if(isset($_POST['btnSalvar'])){
                     <form name="formulario" method="post" action="faleconosco.php" id="formulario">
                         <div id="divform">
                             <p>Nome*:</p>
-                            <input type="text" name="txtNome" style="width:250px;" required>
+                            <input type="text" name="txtNome" style="width:250px;" required maxlength="60">
                             <p>Telefone:</p>
-                            <input type="tel" name="txtTelefone" id="telefone" required onkeypress="return validar(event,'number','telefone')"; pattern="\(\d{2}\)\d{4}-\d{4}">
+                            <input type="tel" name="txtTelefone" id="telefone" required onkeypress="return validar(event,'number','telefone')"; maxlength="13">
                             <p>Celular*:</p>
-                            <input type="tel" name="txtTelefone"  id="celular" required onkeypress="return validar(event,'number','telefone');">
+                            <input type="tel" name="txtCelular"  id="celular" required onkeypress="return validar(event,'number','telefone');" maxlength="14">
                             <p>Email*:</p>
-                            <input type="email" name="txtEmail" style="width:250px;" required>
+                            <input type="email" name="txtEmail" style="width:250px;" required maxlength="100">
                             <p>Home Page:</p>
-                            <input type="text" name="txtHomepage" style="width:250px;">
+                            <input type="text" name="txtHomepage" style="width:250px;" maxlength="100">
                             <p>Facebook:</p>
-                            <input type="text" name="txtFacebook" style="width:250px;">
+                            <input type="text" name="txtFacebook" style="width:250px;" maxlength="100">
                             <p>Sugestões/críticas:</p>
-                            <textarea name="txtCriticas"></textarea>
+                            <textarea name="txtCriticas" maxlength="1000"></textarea>
                             <p>Informações de produtos:</p>
-                            <input type="text" name="txtInformacoes">
+                            <input type="text" name="txtInformacoes" maxlength="250">
                             <p>Sexo*:</p>
                             <input type="radio" name="rdoSexo" value="f" required>F
                             <input type="radio" name="rdoSexo" value="m" required>M
                             <p>Profissão*:</p>
-                            <input type="text" name="txtProfissao" style="width:250px;" required>
+                            <input type="text" name="txtProfissao" style="width:250px;" required maxlength="40">
                             <button type="submit" name="btnSalvar">Salvar</button>
                             <button type="reset" name="btnLimpar">Limpar</button>
                         </div>
